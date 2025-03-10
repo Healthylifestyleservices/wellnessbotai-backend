@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Set Up Your Wellness Bot</title>
+    <style>
+        body { font-family: Arial; padding: 20px; text-align: center; }
+        input { width: 80%; padding: 10px; margin: 10px; }
+        button { padding: 10px 20px; background: #00f; color: white; border: none; }
+        #message { color: red; margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <h1>Set Up Your Wellness Bot</h1>
+    <p>Fill in these boxes to get your bot ready!</p>
+    <input id="email" type="text" placeholder="Your email (like jdoe@email.com)">
+    <input id="repid" type="text" placeholder="Your unique ID (like jdoe)">
+    <input id="referral" type="text" placeholder="Your referral link (like https://referral.doterra.me/12345678)">
+    <button onclick="setupBot()">Submit</button>
+    <div id="message"></div>
+    <script>
+        function getCode() {
+            let url = window.location.search;
+            let code = url.split('code=')[1];
+            return code || '';
+        }
+        function setupBot() {
+            let code = getCode();
+            let email = document.getElementById('email').value;
+            let repid = document.getElementById('repid').value;
+            let referral = document.getElementById('referral').value;
+            let message = document.getElementById('message');
+            if (!code || !email || !repid || !referral) {
+                message.innerHTML = 'Please fill in all boxes!';
+                return;
+            }
+            // Fake list of used codes for now—Step 3 will make this real
+            let usedCodes = ['Order-1001'];
+            if (usedCodes.includes(code)) {
+                message.innerHTML = 'Sorry, this link is already used! Buy a new bot at healthylifestyleservices.com.';
+            } else {
+                message.innerHTML = 'Great! Your bot is being set up—check your email soon for your new link!';
+                // Step 3 will actually create the bot and send the email
+            }
+        }
+    </script>
+</body>
+</html>
