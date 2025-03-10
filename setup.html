@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Set Up Your Wellness Bot</title>
+    <style>
+        body { font-family: Arial; padding: 20px; text-align: center; }
+        input { width: 80%; padding: 10px; margin: 10px; }
+        button { padding: 10px 20px; background: #00f; color: white; border: none; }
+        #message { color: green; margin-top: 10px; }
+        #error { color: red; margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <h1>Set Up Your Wellness Bot</h1>
+    <p>Fill in these boxes to get your bot link right away!</p>
+    <input id="email" type="text" placeholder="Your email (like jdoe@email.com)">
+    <input id="repid" type="text" placeholder="Your unique ID (like jdoe)">
+    <input id="referral" type="text" placeholder="Your referral link (like https://referral.doterra.me/12345678)">
+    <button onclick="setupBot()">Submit</button>
+    <div id="message"></div>
+    <div id="error"></div>
+    <script>
+        // Temporary list to track used codes—Step 3 will make this permanent
+        let usedCodes = [];
+
+        function getCode() {
+            let url = window.location.search;
+            let code = url.split('code=')[1];
+            return code || '';
+        }
+
+        function setupBot() {
+            let code = getCode();
+            let email = document.getElementById('email').value;
+            let repid = document.getElementById('repid').value;
+            let referral = document.getElementById('referral').value;
+            let message = document.getElementById('message');
+            let error = document.getElementById('error');
+            message.innerHTML = '';
+            error.innerHTML = '';
+
+            // Check if all fields are filled
+            if (!code || !email || !repid || !referral) {
+                error.innerHTML = 'Please fill in all boxes!';
+                return;
+            }
+
+            // Check if the code is already used
+            if (usedCodes.includes(code)) {
+                error.innerHTML = 'Sorry, this link is already used! Buy a new bot at healthlifestyleservices.com.';
+                return;
+            }
+
+            // Mark the code as used
+            usedCodes.push(code);
+
+            // Generate the new bot URL
+            let newLink = 'https://healthylifestyleservices.github.io/wellnessbotai_backend/' + repid + '-wellness';
+            message.innerHTML = 'Success! Your bot is ready. Use this link for your visitors: ' + newLink + '<br>Copy it and share it—they’ll see your site with a chat box!';
+            // Step 3 will create the bot page at this URL
+        }
+    </script>
+</body>
+</html>     
