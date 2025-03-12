@@ -3,19 +3,35 @@
 <head>
     <title>Wellness Bot</title>
     <style>
-        body { font-family: Arial; padding: 20px; text-align: center; background: #f0f0f0; }
-        a { display: inline-block; padding: 10px 20px; background: #007bff; color: white; text-decoration: none; border-radius: 5px; margin: 10px; }
+        body { margin: 0; padding: 0; overflow: hidden; background: #f0f0f0; position: relative; }
+        #doterra { width: 100%; height: 100vh; border: none; }
+        #chatbox { position: fixed; bottom: 20px; right: 20px; width: 320px; height: 420px; background: white; border: 2px solid #333; border-radius: 8px; box-shadow: 0 0 15px rgba(0,0,0,0.5); z-index: 1000; display: none; }
+        #chatbox iframe { width: 100%; height: 100%; border: none; }
+        #chatButton { position: fixed; bottom: 20px; right: 20px; padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; z-index: 999; }
     </style>
 </head>
 <body>
-    <h1>Your Wellness Bot</h1>
-    <p>Click below to visit your doTERRA page or chat:</p>
-    <a id="doterraLink" href="https://www.doterra.com/US/en" target="_blank">Go to doTERRA</a>
-    <a href="https://poe.com/Grok" target="_blank">Chat with Wellness Bot</a>
+    <iframe id="doterra" src="https://www.doterra.com/US/en"></iframe>
+    <button id="chatButton" onclick="toggleChat()">Chat with Wellness Bot</button>
+    <div id="chatbox">
+        <iframe src="https://poe.com/Grok" sandbox="allow-scripts allow-same-origin"></iframe>
+    </div>
     <script>
         let repId = window.location.pathname.split('/').pop().split('-')[0].replace('.html', '');
         let referral = localStorage.getItem(repId + '-referral') || 'https://www.doterra.com/US/en';
-        document.getElementById('doterraLink').href = referral;
+        document.getElementById('doterra').src = referral;
+
+        function toggleChat() {
+            let chatbox = document.getElementById('chatbox');
+            let button = document.getElementById('chatButton');
+            if (chatbox.style.display === 'none' || chatbox.style.display === '') {
+                chatbox.style.display = 'block';
+                button.style.display = 'none';
+            } else {
+                chatbox.style.display = 'none';
+                button.style.display = 'block';
+            }
+        }
     </script>
 </body>
 </html>
