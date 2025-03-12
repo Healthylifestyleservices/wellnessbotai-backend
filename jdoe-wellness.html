@@ -10,7 +10,12 @@
 <body>
     <h1>Your Wellness Bot</h1>
     <p>Use the buttons below:</p>
-    <a href="https://referral.doterra.me/12345678" target="_blank">Go to doTERRA</a>
+    <a href="https://www.doterra.com/US/en" target="_blank">Go to doTERRA (English)</a>
     <button onclick="window.open('https://poe.com/Grok', '_blank')">Chat with Wellness Bot</button>
+    <script>
+        let repId = window.location.pathname.split('/').pop().split('-')[0].replace('.html', '');
+        let referral = localStorage.getItem(repId + '-referral') || 'https://www.doterra.com/US/en';
+        document.querySelector('a').href = referral;
+    </script>
 </body>
 </html>
