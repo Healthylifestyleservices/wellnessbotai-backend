@@ -20,7 +20,6 @@
     <div id="message"></div>
     <div id="error"></div>
     <script>
-        // Temporary list to track used codes—Step 3 will make this permanent
         let usedCodes = [];
 
         function getCode() {
@@ -39,26 +38,21 @@
             message.innerHTML = '';
             error.innerHTML = '';
 
-            // Check if all fields are filled
             if (!code || !email || !repid || !referral) {
                 error.innerHTML = 'Please fill in all boxes!';
                 return;
             }
 
-            // Check if the code is already used
             if (usedCodes.includes(code)) {
                 error.innerHTML = 'Sorry, this link is already used! Buy a new bot at healthlifestyleservices.com.';
                 return;
             }
 
-            // Mark the code as used
             usedCodes.push(code);
 
-            // Generate the new bot URL
-            let newLink = 'https://healthylifestyleservices.github.io/wellnessbotai_backend/' + repid + '-wellness';
+            let newLink = 'https://healthylifestyleservices.github.io/wellnessbotai-backend/' + repid + '-wellness';
             message.innerHTML = 'Success! Your bot is ready. Use this link for your visitors: ' + newLink + '<br>Copy it and share it—they’ll see your site with a chat box!';
-            // Step 3 will create the bot page at this URL
         }
     </script>
 </body>
-</html>     
+</html>
