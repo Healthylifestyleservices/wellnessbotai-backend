@@ -1,23 +1,25 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Wellness Bot</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wellness Bot Landing Page</title>
     <style>
-        body { margin: 0; padding: 0; overflow: hidden; background: #f0f0f0; }
-        #doterra { width: 100%; height: 100vh; border: none; }
-        #chatbox { position: fixed; bottom: 20px; right: 20px; width: 320px; height: 420px; background: white; border: 2px solid #333; border-radius: 8px; box-shadow: 0 0 15px rgba(0,0,0,0.5); z-index: 1000; }
-        #chatbox iframe { width: 100%; height: 100%; border: none; }
+        body { font-family: Arial, sans-serif; padding: 20px; text-align: center; background: #f0f0f0; }
+        h1 { color: #333; }
+        .button { display: inline-block; padding: 10px 20px; background: #007bff; color: white; text-decoration: none; border-radius: 5px; margin: 10px; font-size: 16px; }
+        .button:hover { background: #0056b3; }
     </style>
 </head>
 <body>
-    <iframe id="doterra" src="https://www.doterra.com/US/en"></iframe>
-    <div id="chatbox">
-        <iframe src="https://poe.com/Grok" sandbox="allow-scripts allow-same-origin"></iframe>
-    </div>
+    <h1>Welcome to Your Wellness Bot</h1>
+    <p>Click the buttons below to access your doTERRA page or chat with the Wellness Bot.</p>
+    <a id="doterraLink" href="https://www.doterra.com/US/en" target="_blank" class="button">Go to doTERRA</a>
+    <a href="https://poe.com/Grok" target="_blank" class="button">Chat with Wellness Bot</a>
     <script>
         let repId = window.location.pathname.split('/').pop().split('-')[0].replace('.html', '');
         let referral = localStorage.getItem(repId + '-referral') || 'https://www.doterra.com/US/en';
-        document.getElementById('doterra').src = referral;
+        document.getElementById('doterraLink').href = referral;
     </script>
 </body>
 </html>
