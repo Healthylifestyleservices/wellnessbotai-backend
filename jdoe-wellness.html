@@ -3,21 +3,23 @@
 <head>
     <title>Wellness Bot</title>
     <style>
-        body { margin: 0; padding: 0; overflow: hidden; }
-        iframe { width: 100%; height: 100vh; border: none; }
+        body { font-family: Arial; padding: 20px; text-align: center; }
         #chatbox { position: fixed; bottom: 20px; right: 20px; width: 300px; height: 400px; background: white; border: 1px solid #ccc; border-radius: 5px; box-shadow: 0 0 10px rgba(0,0,0,0.3); }
-        #chatbox iframe { width: 100%; height: 100%; }
+        #chatbox iframe { width: 100%; height: 100%; border: none; }
+        a { display: inline-block; padding: 10px 20px; background: #00f; color: white; text-decoration: none; border-radius: 5px; }
     </style>
 </head>
 <body>
-    <iframe id="doterra" src=""></iframe>
+    <h1>Your Wellness Bot</h1>
+    <p>Click below to visit your doTERRA page:</p>
+    <a id="doterraLink" href="" target="_blank">Go to doTERRA</a>
     <div id="chatbox">
         <iframe src="https://chat.x.ai/grok?message=Hi! I’m your Wellness Bot, here to help with doTERRA questions. What’s on your mind?"></iframe>
     </div>
     <script>
-        let repId = window.location.pathname.split('/').pop().split('-')[0];
+        let repId = window.location.pathname.split('/').pop().split('-')[0].replace('.html', '');
         let referral = localStorage.getItem(repId + '-referral') || 'https://referral.doterra.me/12345678';
-        document.getElementById('doterra').src = referral;
+        document.getElementById('doterraLink').href = referral;
     </script>
 </body>
-</html> 
+</html>
