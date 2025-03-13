@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Wellness Bot</title>
+    <style>
+        body { font-family: Arial; padding: 20px; text-align: center; background: #f0f0f0; }
+        button { padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; margin: 10px; }
+    </style>
+</head>
+<body>
+    <h1>Wellness Bot</h1>
+    <p>Click to visit your doTERRA page or chat below:</p>
+    <button onclick="window.open(referralLink, '_blank')">Go to doTERRA</button>
+    <script src="https://app.aminos.ai/js/chat_plugin.js" data-bot-id="46425"></script>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const repId = urlParams.get('repid') || 'default';
+        let referralLink = 'https://www.doterra.com/US/en'; // Fallback
+        fetch(`https://hooks.zapier.com/hooks/your-zapier-webhook-id?repid=${repId}`)
+            .then(response => response.json())
+            .then(data => referralLink = data.referral || referralLink)
+            .catch(() => console.log('Referral fetch failed'));
+    </script>
+</body>
+</html>
