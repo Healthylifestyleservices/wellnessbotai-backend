@@ -1,35 +1,56 @@
-<script>
-    let usedCodes = [];
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Set Up Your Wellness Bot</title>
+    <style>
+        body { font-family: Arial; padding: 20px; text-align: center; }
+        input { width: 80%; padding: 10px; margin: 10px; }
+        button { padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        #message { color: green; margin-top: 10px; }
+        #error { color: red; margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <h1>Set Up Your Wellness Bot</h1>
+    <p>Enter your details below:</p>
+    <input id="email" type="email" placeholder="Your email" required>
+    <input id="repid" type="text" placeholder="Your unique ID (e.g., jdoe)" required>
+    <input id="referral" type="url" placeholder="Your doTERRA referral link" required>
+    <button onclick="setupBot()">Submit</button>
+    <div id="message"></div>
+    <div id="error"></div>
+    <script>
+        let usedCodes = [];
 
-    function getCode() {
-        let url = window.location.search;
-        let code = url.split('code=')[1];
-        return code || '';
-    }
-
-    function setupBot() {
-        let code = getCode();
-        let email = document.getElementById('email').value;
-        let repid = document.getElementById('repid').value;
-        let referral = document.getElementById('referral').value;
-        let message = document.getElementById('message');
-        let error = document.getElementById('error');
-        message.innerHTML = '';
-        error.innerHTML = '';
-
-        if (!code || !email || !repid || !referral) {
-            error.innerHTML = 'Please fill in all boxes!';
-            return;
+        function getCode() {
+            let url = window.location.search;
+            return url.split('code=')[1] || '';
         }
 
-        if (usedCodes.includes(code)) {
-            error.innerHTML = 'Sorry, this link is already used! Buy a new bot at healthlifestyleservices.com.';
-            return;
-        }
+        function setupBot() {
+            let code = getCode();
+            let email = document.getElementById('email').value;
+            let repid = document.getElementById('repid').value;
+            let referral = document.getElementById('referral').value;
+            let message = document.getElementById('message');
+            let error = document.getElementById('error');
+            message.innerHTML = '';
+            error.innerHTML = '';
 
-        usedCodes.push(code);
-        localStorage.setItem(repid + '-referral', referral);
-        let newLink = 'https://healthylifestyleservices.github.io/wellnessbotai-backend/' + repid + '-wellness';
-        message.innerHTML = 'Success! Your bot is ready. Use this link for your visitors: ' + newLink + '<br>Copy it and share it—they’ll see your site with a chat box!';
-    }
-</script>
+            if (!code || !email || !repid || !referral) {
+                error.innerHTML = 'Please fill in all fields!';
+                return;
+            }
+
+            if (usedCodes.includes(code)) {
+                error.innerHTML = 'This code is already used! Contact support.';
+                return;
+            }
+
+            usedCodes.push(code);
+            let botLink = `https://healthylifestyleservices.github.io/wellnessbotai-backend/bot.html?repid=${repid}`;
+            message.innerHTML = `Success! Your bot is ready. Share this link: <a href="${botLink}" target="_blank">${botLink}</a>`;
+        }
+    </script>
+</body>
+</html>
