@@ -22,8 +22,6 @@
   <div id="message"></div>
   <div id="error"></div>
   <script>
-    let usedCodes = [];
-
     function getCode() {
       let url = window.location.search;
       return url.split('code=')[1] || '';
@@ -44,12 +42,6 @@
         return;
       }
 
-      if (usedCodes.includes(code)) {
-        error.innerHTML = 'This code is already used! Contact support.';
-        return;
-      }
-
-      usedCodes.push(code);
       let botLink = `https://www.healthlifestyleservices.com/doterra-bot-landing?repid=${repid}&referral=${encodeURIComponent(referral)}`;
       window.location.href = botLink;
     }
