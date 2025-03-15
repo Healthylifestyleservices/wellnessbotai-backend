@@ -1,56 +1,58 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Set Up Your Wellness Bot</title>
-    <style>
-        body { font-family: Arial; padding: 20px; text-align: center; }
-        input { width: 80%; padding: 10px; margin: 10px; }
-        button { padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; }
-        #message { color: green; margin-top: 10px; }
-        #error { color: red; margin-top: 10px; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Set Up Your Wellness Bot</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; text-align: center; }
+    input { width: 80%; padding: 10px; margin: 10px 0; }
+    button { padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; }
+    #message { color: green; margin-top: 10px; }
+    #error { color: red; margin-top: 10px; }
+  </style>
 </head>
 <body>
-    <h1>Set Up Your Wellness Bot</h1>
-    <p>Enter your details below:</p>
-    <input id="email" type="email" placeholder="Your email" required>
-    <input id="repid" type="text" placeholder="Your unique ID (e.g., jdoe)" required>
-    <input id="referral" type="url" placeholder="Your doTERRA referral link" required>
-    <button onclick="setupBot()">Submit</button>
-    <div id="message"></div>
-    <div id="error"></div>
-    <script>
-        let usedCodes = [];
+  <h1>Set Up Your Wellness Bot</h1>
+  <p>Enter your details below to activate your bot.</p>
+  <input id="email" type="email" placeholder="Your email" required>
+  <input id="repid" type="text" placeholder="Your unique ID (e.g., jdoe)" required>
+  <input id="referral" type="url" placeholder="Your doTERRA referral link" required>
+  <button onclick="setupBot()">Submit</button>
+  <div id="message"></div>
+  <div id="error"></div>
+  <script>
+    let usedCodes = [];
 
-        function getCode() {
-            let url = window.location.search;
-            return url.split('code=')[1] || '';
-        }
+    function getCode() {
+      let url = window.location.search;
+      return url.split('code=')[1] || '';
+    }
 
-        function setupBot() {
-            let code = getCode();
-            let email = document.getElementById('email').value;
-            let repid = document.getElementById('repid').value;
-            let referral = document.getElementById('referral').value;
-            let message = document.getElementById('message');
-            let error = document.getElementById('error');
-            message.innerHTML = '';
-            error.innerHTML = '';
+    function setupBot() {
+      let code = getCode();
+      let email = document.getElementById('email').value;
+      let repid = document.getElementById('repid').value;
+      let referral = document.getElementById('referral').value;
+      let message = document.getElementById('message');
+      let error = document.getElementById('error');
+      message.innerHTML = '';
+      error.innerHTML = '';
 
-            if (!code || !email || !repid || !referral) {
-                error.innerHTML = 'Please fill in all fields!';
-                return;
-            }
+      if (!code || !email || !repid || !referral) {
+        error.innerHTML = 'Please fill in all fields!';
+        return;
+      }
 
-            if (usedCodes.includes(code)) {
-                error.innerHTML = 'This code is already used! Contact support.';
-                return;
-            }
+      if (usedCodes.includes(code)) {
+        error.innerHTML = 'This code is already used! Contact support.';
+        return;
+      }
 
-            usedCodes.push(code);
-            let botLink = `https://healthylifestyleservices.github.io/wellnessbotai-backend/bot.html?repid=${repid}`;
-            message.innerHTML = `Success! Your bot is ready. Share this link: <a href="${botLink}" target="_blank">${botLink}</a>`;
-        }
-    </script>
+      usedCodes.push(code);
+      let botLink = `https://www.healthlifestyleservices.com/doterra-bot-landing?repid=${repid}&referral=${encodeURIComponent(referral)}`;
+      window.location.href = botLink;
+    }
+  </script>
 </body>
 </html>
