@@ -1,0 +1,53 @@
+name: Configure Customer Bot
+on:
+  repository_dispatch:
+    types: [customer-event]
+jobs:
+  configure:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+      - name: Update Bot Config
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const payload = github.context.payload.client_payload;
+            const fs = require('fs');
+            const config = {
+              bot_id: 'iTerra',
+              name: payload.name || 'Unknown',
+              doterra_site: payload.doterra_site || 'https://my.doterra.com/default',
+              features: {
+                white_glove: true,
+                aromatherapist: true,
+                links: [
+                  'https://www.doterra.com/us/en/p/peppermint-oil',
+                  'https://www.doterra.com/us/en/p/lavender-oil',
+                  'https://www.doterra.com/us/en/p/lemon-oil',
+                  'https://www.doterra.com/us/en/p/frankincense-oil',
+                  'https://www.doterra.com/us/en/p/tea-tree-oil',
+                  'https://www.doterra.com/us/en/p/eucalyptus-oil',
+                  'https://www.doterra.com/us/en/p/oregano-oil',
+                  'https://www.doterra.com/us/en/p/clary-sage-oil',
+                  'https://www.doterra.com/us/en/p/bergamot-oil',
+                  'https://www.doterra.com/us/en/p/ylang-ylang-oil',
+                  'https://www.doterra.com/us/en/p/geranium-oil',
+                  'https://www.doterra.com/us/en/p/rosemary-oil',
+                  'https://www.doterra.com/us/en/p/cypress-oil',
+                  'https://www.doterra.com/us/en/p/ginger-oil',
+                  'https://www.doterra.com/us/en/p/juniper-berry-oil',
+                  'https://www.doterra.com/us/en/p/fennel-oil',
+                  'https://www.doterra.com/us/en/p/patchouli-oil',
+                  'https://www.doterra.com/us/en/p/on-guard-collection'
+                ],
+                free_search: true
+              }
+            };
+            fs.writeFileSync(`configs/bot-config-${payload.name.toLowerCase().replace(/\s/g, '-')}.json`, JSON.stringify(config, null, 2));
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `New Customer: ${payload.name}`,
+              body: `**Name**: ${payload.name}\n**Email**: ${payload.email}\n**doTERRA Site**: ${payload.doterra_site}`
+            });
