@@ -1,59 +1,28 @@
-name: Configure Customer Bot
-on:
-  repository_dispatch:
-    types: [customer-event]
-jobs:
-  configure:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
-      - name: Debug Full Payload
-        run: echo "Full payload: ${{ toJSON(github.context.payload) }}"
-      - name: Update Bot Config
-        uses: actions/github-script@v6
-        with:
-          script: |
-            const payload = github.context.payload.client_payload || {};
-            console.log("Client payload:", JSON.stringify(payload));
-            if (!payload.name || !payload.email || !payload.doterra_site) {
-              throw new Error('Invalid or missing client_payload: name, email, and doterra_site are required. Received: ' + JSON.stringify(payload));
-            }
-            const fs = require('fs');
-            const config = {
-              bot_id: 'iTerra',
-              name: payload.name,
-              doterra_site: payload.doterra_site,
-              features: {
-                white_glove: true,
-                aromatherapist: true,
-                links: [
-                  'https://www.doterra.com/us/en/p/peppermint-oil',
-                  'https://www.doterra.com/us/en/p/lavender-oil',
-                  'https://www.doterra.com/us/en/p/lemon-oil',
-                  'https://www.doterra.com/us/en/p/frankincense-oil',
-                  'https://www.doterra.com/us/en/p/tea-tree-oil',
-                  'https://www.doterra.com/us/en/p/eucalyptus-oil',
-                  'https://www.doterra.com/us/en/p/oregano-oil',
-                  'https://www.doterra.com/us/en/p/clary-sage-oil',
-                  'https://www.doterra.com/us/en/p/bergamot-oil',
-                  'https://www.doterra.com/us/en/p/ylang-ylang-oil',
-                  'https://www.doterra.com/us/en/p/geranium-oil',
-                  'https://www.doterra.com/us/en/p/rosemary-oil',
-                  'https://www.doterra.com/us/en/p/cypress-oil',
-                  'https://www.doterra.com/us/en/p/ginger-oil',
-                  'https://www.doterra.com/us/en/p/juniper-berry-oil',
-                  'https://www.doterra.com/us/en/p/fennel-oil',
-                  'https://www.doterra.com/us/en/p/patchouli-oil',
-                  'https://www.doterra.com/us/en/p/on-guard-collection'
-                ],
-                free_search: true
-              }
-            };
-            fs.writeFileSync(`configs/bot-config-${payload.name.toLowerCase().replace(/\s/g, '-')}.json`, JSON.stringify(config, null, 2));
-            await github.rest.issues.create({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              title: `New Customer: ${payload.name}`,
-              body: `**Name**: ${payload.name}\n**Email**: ${payload.email}\n**doTERRA Site**: ${payload.doterra_site}`
-            });
+.github/workflows/customer-bot-config.yml
+Update customer-bot-config.ymlUpdate customer-bot-config.yml with enh… #14
+Jobs
+Run details
+Triggered via push 10 minutes ago
+@HealthylifestyleservicesHealthylifestyleservices
+pushed
+ c65d030
+main
+Status
+Failure
+Total duration
+–
+Artifacts
+–
+This workflow graph cannot be shown
+A graph will be generated the next time this workflow is run.
+
+Annotations
+1 error
+Invalid workflow file: .github/workflows/customer-bot-config.yml#L12
+You have an error in your yaml syntax on line 12
+No response.
+
+Grok was unable to finish replying.
+Please try again later or use a different model.
+
+How can Grok help?
