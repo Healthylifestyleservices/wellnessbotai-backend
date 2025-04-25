@@ -8,16 +8,22 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
+      - name: Debug Full Payload
+        run: echo "Full payload: ${{ toJSON(github.context.payload) }}"
       - name: Update Bot Config
         uses: actions/github-script@v6
         with:
           script: |
-            const payload = github.context.payload.client_payload;
+            const payload = github.context.payload.client_payload || {};
+            console.log("Client payload:", JSON.stringify(payload));
+            if (!payload.name || !payload.email || !payload.doterra_site) {
+              throw new Error('Invalid or missing client_payload: name, email, and doterra_site are required. Received: ' + JSON.stringify(payload));
+            }
             const fs = require('fs');
             const config = {
               bot_id: 'iTerra',
-              name: payload.name || 'Unknown',
-              doterra_site: payload.doterra_site || 'https://my.doterra.com/default',
+              name: payload.name,
+              doterra_site: payload.doterra_site,
               features: {
                 white_glove: true,
                 aromatherapist: true,
