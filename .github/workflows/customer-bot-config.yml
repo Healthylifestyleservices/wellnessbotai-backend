@@ -7,12 +7,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Debug Full Payload
-        run: echo "Full payload: ${{ toJSON(github.context.payload) }}"
+        run: echo "Full payload: ${{ toJSON(github.event) }}"
       - name: Validate Payload
         uses: actions/github-script@v6
         with:
           script: |
-            const payload = github.context.payload.client_payload || {};
+            const payload = github.event.client_payload || {};
             console.log("Client payload:", JSON.stringify(payload));
             if (!payload.slug || !payload.associate_id || !payload.associate_name) {
               throw new Error('Missing required fields in client_payload: slug, associate_id, associate_name. Received: ' + JSON.stringify(payload));
